@@ -1,0 +1,52 @@
+Скачаем два образа
+
+$ docker pull php:7.4-apache
+$ docker pull mysql:latest
+
+Создаем файлы конфигурации
+Теперь возьмем из образа php:7.4-apache файл конфигурации Apache2 и файл конфигурации PHP (который работает как модуль Apache):
+
+$ cd ~/www/apache
+$ docker run --rm php:7.4-apache cat /etc/apache2/apache2.conf > httpd.conf
+$ docker run --rm php:7.4-apache cat /usr/local/etc/php/php.ini-development > php.ini-development
+$ docker run --rm php:7.4-apache cat /usr/local/etc/php/php.ini-production > php.ini-production
+$ cp php.ini-development php.ini
+
+Из образа mysql:latest возьмем файл конфигурации MySQL /etc/mysql/mysql.cnf:
+
+$ cd ~/www/mysql/
+$ docker run --rm mysql:latest cat /etc/mysql/my.cnf > mysql.cnf
+
+docker-compose up -d
+docker ps
+docker network ls
+docker network inspect www_default
+
+docker-compose exec apache /bin/bash
+docker logs www_apache_1
+docker logs www_mysql_1
+Эта команда работает только для контейнеров, запускаемых с драйвером ведения журнала json-file или journald.
+Логи монтируются на хост, поэтому легко понять, где они лежат:
+docker inspect www_apache_1 | grep LogPath
+Логи можно просматривать в режиме реального времени:
+docker logs www_pma_1 --follow
+
+Docker включает несколько механизмов ведения журналов, которые называются драйверами регистрации.
+По умолчанию используется драйвер json-file, но можно использовать journald, syslog и другие.
+Изменить драйвер можно глобально, через файл /etc/docker/daemon.json:
+$ sudo nano /etc/docker/daemon.json
+{
+    "log-driver": "journald"
+}
+$ sudo systemctl restart docker.service
+
+Либо в файле docker-compose.yml:
+apache:
+  image: httpd:latest
+  logging:
+    driver: journald
+    options:
+      tag: http-daemon
+
+Для фильтрации логов по тегу, надо задать тег в файле docker-compose.yml или при запуске контейнера:
+$ docker run -d -p 80:80 --name apache-server --log-opt tag=http-daemon httpd:latest
