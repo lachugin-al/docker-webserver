@@ -37,7 +37,7 @@ services:
       # пароль пользователя root
       MYSQL_DATABASE: mysql
       MYSQL_ROOT_PASSWORD: qwerty
-      MYSQL_USER: admin
+      MYSQL_USER: user
       MYSQL_PASSWORD: qwerty
     ports:
       - 3306:3306
@@ -61,5 +61,7 @@ services:
       PMA_HOST: mysql
       MYSQL_USERNAME: root
       MYSQL_ROOT_PASSWORD: qwerty
+    links:
+      - mysql
     networks:
       - my_network
