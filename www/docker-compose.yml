@@ -1,7 +1,4 @@
-version: '3.7'
-
-networks:
-  my_network:
+version: '3'
 
 services:
   apache:
@@ -24,8 +21,6 @@ services:
       - ./apache/logs/access.log:/var/log/apache2/access.log
       # монтируем файл логов ошибок Apache2 внутрь контейнера
       - ./apache/logs/error.log:/var/log/apache2/error.log
-    networks:
-      - my_network
 
   mysql:
     build: # инструкции для создания образа
@@ -35,10 +30,7 @@ services:
       dockerfile: Dockerfile
     environment:
       # пароль пользователя root
-      MYSQL_DATABASE: mysql
       MYSQL_ROOT_PASSWORD: qwerty
-      MYSQL_USER: user
-      MYSQL_PASSWORD: qwerty
     ports:
       - 3306:3306
     volumes: # путь указывается от директории, где расположен docker-compose.yml
@@ -48,8 +40,6 @@ services:
       - ./mysql/data/:/var/lib/mysql/
       # монтируем директорию с логами MySQL внутрь контейнера
       - ./mysql/logs/:/var/log/mysql/
-    networks:
-      - my_network
 
   phpmyadmin:
     # используем готовый образ phpmyadmin
@@ -61,7 +51,3 @@ services:
       PMA_HOST: mysql
       MYSQL_USERNAME: root
       MYSQL_ROOT_PASSWORD: qwerty
-    links:
-      - mysql
-    networks:
-      - my_network
