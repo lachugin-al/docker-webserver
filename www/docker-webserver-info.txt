@@ -17,6 +17,13 @@ $ cp php.ini-development php.ini
 $ cd ~/www/mysql/
 $ docker run --rm mysql:latest cat /etc/mysql/my.cnf > mysql.cnf
 
+linux permission
+u - владелец файла;
+g - группа файла;
+o - другие пользователи.
+chmod ugo+rwx -R mysql
+
+docker-compose up --build
 docker-compose up -d
 docker ps
 docker network ls

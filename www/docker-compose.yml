@@ -40,6 +40,7 @@ services:
       - ./mysql/data/:/var/lib/mysql/
       # монтируем директорию с логами MySQL внутрь контейнера
       - ./mysql/logs/:/var/log/mysql/
+      - ./mysql-files:/var/lib/mysql-files
 
   phpmyadmin:
     # используем готовый образ phpmyadmin

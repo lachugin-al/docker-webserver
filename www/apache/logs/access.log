@@ -1,0 +1,4 @@
+172.23.0.1 - - [22/May/2021:21:14:14 +0000] "GET /test/index.php HTTP/1.1" 200 22755 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+172.23.0.1 - - [22/May/2021:21:14:14 +0000] "GET /favicon.ico HTTP/1.1" 404 487 "http://localhost/test/index.php" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+172.23.0.1 - - [22/May/2021:21:14:25 +0000] "GET /test/dbtest.php HTTP/1.1" 200 475 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+172.23.0.1 - - [22/May/2021:21:15:17 +0000] "-" 408 0 "-" "-"
